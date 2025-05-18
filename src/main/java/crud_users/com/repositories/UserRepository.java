@@ -45,15 +45,14 @@ public class UserRepository {
     }
 
     public User updateUser(Long id, User userAtualizado){
-        for (User u : lista) {
-            if (u.getId().equals(id)) {
-                u.setName(userAtualizado.getName());
-                return u;
-            }
-        }
-        throw new RuntimeException("Usuário não encontrado");
+        User user = lista
+                .stream()
+                .filter(item -> Objects.equals(item.getId(), id))
+                .findFirst()
+                .orElseThrow();
+        user.setName(userAtualizado.getName());
+        return user;
     }
-
 
 
 
